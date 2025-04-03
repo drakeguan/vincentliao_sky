@@ -15,6 +15,7 @@ Site:
   jasonlabbe3d.com
 */
 
+var data = null;
 var imgs = [];
 var messages = [];
 var names = [];
@@ -46,7 +47,7 @@ var tooltip = "".concat("Press space to change to the next image.\n",
 // setup() function.
 function preload() {
   // Load the JSON file and then pre-load all images.
-  let data = loadJSON("tribute_data.json", preloadData);
+  data = loadJSON("tribute_data.json", preloadData);
 }
 
 
