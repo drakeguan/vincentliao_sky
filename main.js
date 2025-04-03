@@ -61,7 +61,7 @@ function preloadData(data) {
   for (let i = 0; i < contributors.length; i++) {
     let name = contributors[i].name;
     let photo = contributors[i].photo;
-    let message = contributors[i].messages;
+    let message = contributors[i].message;
 
     names.push(name);
     messages.push(message);
