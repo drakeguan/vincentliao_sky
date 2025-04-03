@@ -14,6 +14,7 @@ Origin:
   Sketch: https://openprocessing.org/sketch/479353
 */
 
+var vincent = null;
 var data = null;
 var imgs = [];
 var messages = [];
@@ -49,6 +50,7 @@ var tooltip = "".concat("Press SPACE, RIGHT or LEFT to navigate to others.\n",
 function preload() {
   // Load the JSON file and then pre-load all images.
   data = loadJSON("tribute_data.json", preloadData);
+  vincent = loadImage("images/vincent.jpg");
 }
 
 
@@ -103,10 +105,10 @@ function draw() {
 
   if (opening) {
     push();
+    image(vincent, 0, 0);
     // Display tooltip.
     noStroke();
-    fill(255);
-    textAlign(CENTER, CENTER);
+    fill(0, 255, 255);
     textSize(24);
     text(tooltip, width / 2, height / 2);
     pop();
