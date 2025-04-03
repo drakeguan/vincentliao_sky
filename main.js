@@ -260,6 +260,17 @@ function draw() {
 }
 
 
+function mousePressed() {
+  let img = imgs[index];
+  let closestData = getClosestHotspot(mouseX + img.width / 2 - width / 2, mouseY + img.height / 2 - height / 2);
+  let closestHotspot = closestData[0];
+
+  if (closestHotspot == null) {
+    nextOne();
+  }
+}
+
+
 function mouseDragged() {
   // Exit if no hotspot was clicked.
   if (activeHotspot == null) {
@@ -284,12 +295,7 @@ function mouseDragged() {
 
 function keyPressed() {
   if (key == " ") {
-    // Change to the next image.
-    index++;
-    if (index >= imgs.length) {
-      index = 0;
-    }
-    initHotspots();
+    nextOne();
   } else {
     // Toggle hotspots.
   	debug = !debug;
@@ -340,6 +346,16 @@ function getClosestHotspot(x, y) {
   }
   
   return [closestHotspot, closestDist];
+}
+
+
+// Change to the next one.
+function nextOne() {
+  index++;
+  if (index >= imgs.length) {
+    index = 0;
+  }
+  initHotspots();
 }
 
 
