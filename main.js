@@ -322,10 +322,7 @@ function keyPressed() {
   if (key === ' ') {
     nextOne();
   } else if (keyCode === UP_ARROW) {
-    print('Hotspots:');
-    for (let i = 0; i < hotspots.length; i++) {
-      print(`[${hotspots[i].x}, ${hotspots[i].y}, ${hotspots[i].r}]`);
-    }
+    print(`"hotspots": [[${int(hotspots[0].x)}, ${int(hotspots[0].y)}, ${int(hotspots[0].r)}], [${int(hotspots[1].x)}, ${int(hotspots[1].y)}, ${int(hotspots[1].r)}], [${int(hotspots[2].x)}, ${int(hotspots[2].y)}, ${int(hotspots[2].r)}], [${int(hotspots[3].x)}, ${int(hotspots[3].y)}, ${int(hotspots[3].r)}]]`);
   } else if (keyCode === DOWN_ARROW) {
     print('Static points:');
     for (let i = 0; i < staticPoints.length; i++) {
