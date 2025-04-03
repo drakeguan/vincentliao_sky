@@ -259,7 +259,7 @@ function drawMessage() {
   let name = names[index];
   let message = messages[index];
   let maxWidth = width * 0.8;
-  let fullText = `${message}\n-- ${name}`;
+  let fullText = `#${index+1} ${message}\n-- ${name}`;
   let wrappedText = fullText.split("\n");
   //let wrappedText = wrapText(fullText, maxWidth);
   //let wrappedText = wrapText(fullText, maxWidth);
