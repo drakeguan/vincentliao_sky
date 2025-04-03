@@ -319,16 +319,25 @@ function mouseDragged() {
 
 
 function keyPressed() {
-  if (key == " ") {
+  if (key === ' ') {
     nextOne();
-  } else if (keyCode == LEFT_ARROW) {
+  } else if (keyCode === UP_ARROW) {
+    print('Hotspots:');
+    for (let i = 0; i < hotspots.length; i++) {
+      print(`[${hotspots[i].x}, ${hotspots[i].y}, ${hotspots[i].r}]`);
+    }
+  } else if (keyCode === DOWN_ARROW) {
+    print('Static points:');
+    for (let i = 0; i < staticPoints.length; i++) {
+      print(`[${staticPoints[i].x}, ${staticPoints[i].y}]`);
+    }
+  } else if (keyCode === LEFT_ARROW) {
     prevOne();
-  }
-  else if (keyCode == RIGHT_ARROW) {
+  } else if (keyCode === RIGHT_ARROW) {
     nextOne();
   } else {
     // Toggle hotspots.
-  	debug = !debug;
+    debug = !debug;
   }
 }
 
