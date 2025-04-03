@@ -15,7 +15,6 @@ Site:
   jasonlabbe3d.com
 */
 
-var imgNames = ["walter.jpg", "clint.jpg", "snake.jpg"]; // Add your image's name here.
 var imgs = [];
 var imgIndex = 0;
 
@@ -38,13 +37,32 @@ var tooltip = "".concat("Press space to change to the next image.\n",
                         "Click and drag hotspots to move or scale them.");
 
 
+// In p5.js, functions like loadJSON() and loadImage() are designed to load
+// external files asynchronously to prevent blocking the main execution thread.
+// To handle this asynchronous behavior within the preload() function, you
+// should ensure that all assets are fully loaded before proceeding to the
+// setup() function.
 function preload() {
-  // Pre-load all images.
+  // Load the JSON file and then pre-load all images.
+  let data = loadJSON("images.json", preloadImages);
+}
+
+
+// Pre-load all images of filenames from the loaded JSON.
+//
+// Because the loadJSON() function in p5.js operates asynchronously. This means
+// that when you attempt to access data.images immediately after calling
+// loadJSON(), the JSON data may not have finished loading, resulting in data
+// being undefined.
+function preloadImages(data) {
+  let imgNames = data.images;
   for (let i = 0; i < imgNames.length; i++) {
-    let newImg = loadImage(imgNames[i]);
+    let newImg = loadImage(`images/${imgNames[i]}`);
     newImg.loadPixels();
     imgs.push(newImg);
   }
+  
+  print("Json loading complete, data ready.");
 }
 
 
