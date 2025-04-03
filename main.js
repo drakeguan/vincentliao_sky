@@ -4,15 +4,14 @@ Voronoi portrait
 Renders a portrait using a voronoi diagram.
 
 Controls:
-  - Press space to change to the next image.
+  - Press space, mouse click or touch to change to the next image.
   - Press any other key to toggle the hotspots.
   - Click and drag hotspots to move or scale them.
 
-Author:
-  Jason Labbe
- 
-Site:
-  jasonlabbe3d.com
+Origin:
+  Author: Jason Labbe
+  Site: Sjasonlabbe3d.com
+  Sketch: https://openprocessing.org/sketch/479353
 */
 
 var data = null;
