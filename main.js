@@ -29,13 +29,14 @@ var diagram;
 var hotspots = [];
 var staticPoints = [];
 
-var debug = true;
+var opening = true;
 var activeHotspot = null;
 var manipMode = 0;
 var ringThickness = 20;
 
-var tooltip = "".concat("Press space to change to the next image.\n", 
-                        "Press any other key to toggle the hotspots.\n", 
+var tooltip = "".concat("Press SPACE, RIGHT or LEFT to navigate to others.\n",
+                        "Click or touch horizontal border to navigate too.\n",
+                        "Press any other key to toggle the hotspots to fine tune them.\n", 
                         "Click and drag hotspots to move or scale them.");
 
 
@@ -98,7 +99,19 @@ function setup() {
 
 function draw() {
   background(0);
-	  
+
+  if (opening) {
+    push();
+    // Display tooltip.
+    noStroke();
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(24);
+    text(tooltip, width / 2, height / 2);
+    pop();
+    return;
+  }
+
   let img = imgs[index];
   img.loadPixels();
   
@@ -213,9 +226,6 @@ function draw() {
   
   pop();
   
-  // Display tooltip.
-  //text(tooltip, width / 2, 100);
-
   // Display message.
   drawMessage();
 }
@@ -284,6 +294,11 @@ function mousePressed() {
   let closestHotspot = closestData[0];
 
   if (closestHotspot == null) {
+    if (opening) {
+      opening = false;
+      return;
+    }
+    // If no hotspot was clicked, check if the mouse is on the horizontal
     if (mouseX > windowWidth / 2) {
       // Clicked on the right side of the screen.
       nextOne();
@@ -319,6 +334,11 @@ function mouseDragged() {
 
 
 function keyPressed() {
+  if (opening) {
+    opening = false;
+    return;
+  }
+
   if (key === ' ') {
     nextOne();
   } else if (keyCode === UP_ARROW) {
