@@ -332,3 +332,16 @@ function getClosestHotspot(x, y) {
   
   return [closestHotspot, closestDist];
 }
+
+
+// Function to get dynamic text size
+function getDynamicTextSize() {
+  return constrain(min(width, height) * 0.04, 14, 32); // Scale text, min 14px, max 32px
+}
+
+
+// Handle window resizing
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  textSize(getDynamicTextSize());
+}
