@@ -29,6 +29,7 @@ var diagram;
 var hotspots = [];
 var staticPoints = [];
 
+var debug = false;
 var opening = true;
 var activeHotspot = null;
 var manipMode = 0;
