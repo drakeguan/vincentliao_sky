@@ -303,6 +303,11 @@ function mouseDragged() {
 function keyPressed() {
   if (key == " ") {
     nextOne();
+  } else if (keyCode == LEFT_ARROW) {
+    prevOne();
+  }
+  else if (keyCode == RIGHT_ARROW) {
+    nextOne();
   } else {
     // Toggle hotspots.
   	debug = !debug;
@@ -361,6 +366,16 @@ function nextOne() {
   index++;
   if (index >= imgs.length) {
     index = 0;
+  }
+  initHotspots();
+}
+
+
+// Change to the previous one.
+function prevOne() {
+  index--;
+  if (index < 0) {
+    index = imgs.length - 1;
   }
   initHotspots();
 }
