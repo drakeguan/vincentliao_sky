@@ -345,25 +345,41 @@ function keyPressed() {
 function initHotspots() {
   let presetValues;
   
-  // Hardcoded values that I thought looked best for each image.
-  if (index % 3 == 0) {
-    presetValues = [[365, 230, 210], [300, 130, 150], [175, 315, 200], [500, 340, 170]];
-  } else if (index % 3 == 1) {
-    presetValues = [[440, 230, 220], [280, 215, 150], [315, 340, 150], [115, 170, 120]];
-  } else if (index % 3 == 2) {
-    presetValues = [[660, 240, 240], [360, 120, 150], [230, 65, 200], [485, 250, 185]];
-  }
-  
-  for (let i = 0; i < hotspots.length; i++) {
-    // Reset hotspot to its preset.
-    if (presetValues != null) {
-      hotspots[i].x = presetValues[i][0];
-      hotspots[i].y = presetValues[i][1];
-      hotspots[i].r = presetValues[i][2];
+  if (data.contributors[index].hotspots != null) {
+    // Use the preset values from the JSON.
+    let jsonHotspots = data.contributors[index].hotspots;
+    for (let i = 0; i < hotspots.length; i++) {
+      hotspots[i].x = jsonHotspots[i][0];
+      hotspots[i].y = jsonHotspots[i][1];
+      hotspots[i].r = jsonHotspots[i][2];
+
+      // Re-collect new points.
+      hotspots[i].getPoints();
     }
-    
-    // Re-collect new points.
-    hotspots[i].getPoints();
+  }
+  else {
+    // Otherwise, use the hardcoded values.
+    // These values are not random, but rather a set of values that I thought
+    // looked best for each image.
+    if (index % 3 == 0) {
+      presetValues = [[365, 230, 210], [300, 130, 150], [175, 315, 200], [500, 340, 170]];
+    } else if (index % 3 == 1) {
+      presetValues = [[440, 230, 220], [280, 215, 150], [315, 340, 150], [115, 170, 120]];
+    } else if (index % 3 == 2) {
+      presetValues = [[660, 240, 240], [360, 120, 150], [230, 65, 200], [485, 250, 185]];
+    }
+
+    for (let i = 0; i < hotspots.length; i++) {
+      // Reset hotspot to its preset.
+      if (presetValues != null) {
+        hotspots[i].x = presetValues[i][0];
+        hotspots[i].y = presetValues[i][1];
+        hotspots[i].r = presetValues[i][2];
+      }
+
+      // Re-collect new points.
+      hotspots[i].getPoints();
+    }
   }
 }
 
