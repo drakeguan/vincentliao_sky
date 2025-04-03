@@ -78,8 +78,7 @@ function preloadData(data) {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
-  textAlign(CENTER, BOTTOM);
-  textSize(24);
+  textAlign(CENTER);
   
   let img = imgs[index]; 
   
@@ -100,8 +99,6 @@ function setup() {
 function draw() {
   background(0);
 	  
-  let name = names[index];
-  let message = messages[index];
   let img = imgs[index];
   img.loadPixels();
   
@@ -211,51 +208,72 @@ function draw() {
   
   // Display hotspots.
   if (debug) {
-    for (let i = 0; i < hotspots.length; i++) {
-      noFill();
-      stroke(255);
-      strokeWeight(1);
-      ellipse(hotspots[i].x, hotspots[i].y, hotspots[i].r*2)
-    }
-    
-    // Display hotspot highlights.
-    if (activeHotspot != null) {
-      let d = dist(mouseX+img.width/2-width/2, mouseY+img.height/2-height/2, activeHotspot.x, activeHotspot.y);
-      
-      if (d < activeHotspot.r+ringThickness*0.5) {
-        stroke(0, 255, 0, 30);
-        
-        if (d < activeHotspot.r-ringThickness*0.5) {
-          // Display inner highlight.
-          strokeWeight(activeHotspot.r*2-ringThickness);
-          point(activeHotspot.x, activeHotspot.y)
-        } else {
-          // Display outer ring highlight.
-          noFill();
-          strokeWeight(ringThickness);
-          ellipse(activeHotspot.x, activeHotspot.y, activeHotspot.r*2)
-        }
-      }
-    }
+    drawHotspot();
   }
   
   pop();
   
   // Display tooltip.
+  //text(tooltip, width / 2, 100);
+
+  // Display message.
+  drawMessage();
+}
+
+
+function drawHotspot() {
+  let img = imgs[index];
+
   push();
-  noStroke();
-  fill(255);
+  for (let i = 0; i < hotspots.length; i++) {
+    noFill();
+    stroke(255);
+    strokeWeight(1);
+    ellipse(hotspots[i].x, hotspots[i].y, hotspots[i].r * 2);
+  }
+
+  // Display hotspot highlights.
+  if (activeHotspot != null) {
+    let d = dist(mouseX + img.width / 2 - width / 2, mouseY + img.height / 2 - height / 2, activeHotspot.x, activeHotspot.y);
+
+    if (d < activeHotspot.r + ringThickness * 0.5) {
+      stroke(0, 255, 0, 30);
+
+      if (d < activeHotspot.r - ringThickness * 0.5) {
+        // Display inner highlight.
+        strokeWeight(activeHotspot.r * 2 - ringThickness);
+        point(activeHotspot.x, activeHotspot.y)
+      } else {
+        // Display outer ring highlight.
+        noFill();
+        strokeWeight(ringThickness);
+        ellipse(activeHotspot.x, activeHotspot.y, activeHotspot.r * 2)
+      }
+    }
+  }
+  pop();
+}
+
+
+function drawMessage() {
+  let name = names[index];
+  let message = messages[index];
   let maxWidth = width * 0.8;
   let fullText = `${message}\n-- ${name}`;
   let wrappedText = fullText.split("\n");
   //let wrappedText = wrapText(fullText, maxWidth);
   //let wrappedText = wrapText(fullText, maxWidth);
+
+  push();
+  noStroke();
+  fill(255);
+  textAlign(CENTER, BOTTOM);
+  textSize(24);
   let lineHeight = textSize() * 1.4;
   let yOffset = height - lineHeight * wrappedText.length - 20;
   for (let i = 0; i < wrappedText.length; i++) {
     text(wrappedText[i], width / 2, yOffset + i * lineHeight);
   }
-  //text(tooltip, width / 2, 100);
   pop();
 }
 
