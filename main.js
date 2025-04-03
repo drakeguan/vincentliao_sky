@@ -16,7 +16,9 @@ Site:
 */
 
 var imgs = [];
-var imgIndex = 0;
+var messages = [];
+var names = [];
+var index = 0;
 
 var spawnCount = 1000;
 var falloff = 0.6; // 0-1.0
@@ -44,7 +46,7 @@ var tooltip = "".concat("Press space to change to the next image.\n",
 // setup() function.
 function preload() {
   // Load the JSON file and then pre-load all images.
-  let data = loadJSON("images.json", preloadImages);
+  let data = loadJSON("tribute_data.json", preloadData);
 }
 
 
@@ -54,10 +56,17 @@ function preload() {
 // that when you attempt to access data.images immediately after calling
 // loadJSON(), the JSON data may not have finished loading, resulting in data
 // being undefined.
-function preloadImages(data) {
-  let imgNames = data.images;
-  for (let i = 0; i < imgNames.length; i++) {
-    let newImg = loadImage(`images/${imgNames[i]}`);
+function preloadData(data) {
+  let contributors = data.contributors;
+  for (let i = 0; i < contributors.length; i++) {
+    let name = contributors[i].name;
+    let photo = contributors[i].photo;
+    let message = contributors[i].messages;
+
+    names.push(name);
+    messages.push(message);
+
+    let newImg = loadImage(`images/${photo}`);
     newImg.loadPixels();
     imgs.push(newImg);
   }
@@ -70,8 +79,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   
   textAlign(CENTER);
+  textSize(24);
   
-  let img = imgs[imgIndex]; 
+  let img = imgs[index]; 
   
   // Create hotspots.
   for (let i = 0; i < 4; i++) {
@@ -90,7 +100,9 @@ function setup() {
 function draw() {
   background(0);
 	  
-  let img = imgs[imgIndex];
+  let name = names[index];
+  let message = messages[index];
+  let img = imgs[index];
   img.loadPixels();
   
   // Align image to the scene's center.
@@ -230,9 +242,12 @@ function draw() {
   pop();
   
   // Display tooltip.
+  push();
   noStroke();
   fill(255);
-  text(tooltip, width/2, 50);
+  textAlign(CENTER, BOTTOM);
+  text(name, width/2, height*0.95, width/2);
+  pop();
 }
 
 
@@ -242,7 +257,7 @@ function mouseDragged() {
     return;
   }
   
-  let img = imgs[imgIndex];
+  let img = imgs[index];
   
   if (manipMode == 0) {
     // Move the hotspot.
@@ -261,9 +276,9 @@ function mouseDragged() {
 function keyPressed() {
   if (key == " ") {
     // Change to the next image.
-    imgIndex++;
-    if (imgIndex >= imgs.length) {
-      imgIndex = 0;
+    index++;
+    if (index >= imgs.length) {
+      index = 0;
     }
     initHotspots();
   } else {
@@ -277,11 +292,11 @@ function initHotspots() {
   let presetValues;
   
   // Hardcoded values that I thought looked best for each image.
-  if (imgIndex == 0) {
+  if (index % 3 == 0) {
     presetValues = [[365, 230, 210], [300, 130, 150], [175, 315, 200], [500, 340, 170]];
-  } else if (imgIndex == 1) {
+  } else if (index % 3 == 1) {
     presetValues = [[440, 230, 220], [280, 215, 150], [315, 340, 150], [115, 170, 120]];
-  } else if (imgIndex == 2) {
+  } else if (index % 3 == 2) {
     presetValues = [[660, 240, 240], [360, 120, 150], [230, 65, 200], [485, 250, 185]];
   }
   
