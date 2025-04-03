@@ -78,7 +78,7 @@ function preloadData(data) {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
-  textAlign(CENTER);
+  textAlign(CENTER, BOTTOM);
   textSize(24);
   
   let img = imgs[index]; 
@@ -245,8 +245,17 @@ function draw() {
   push();
   noStroke();
   fill(255);
-  textAlign(CENTER, BOTTOM);
-  text(name, width/2, height*0.95, width/2);
+  let maxWidth = width * 0.8;
+  let fullText = `${message}\n-- ${name}`;
+  let wrappedText = fullText.split("\n");
+  //let wrappedText = wrapText(fullText, maxWidth);
+  //let wrappedText = wrapText(fullText, maxWidth);
+  let lineHeight = textSize() * 1.4;
+  let yOffset = height - lineHeight * wrappedText.length - 20;
+  for (let i = 0; i < wrappedText.length; i++) {
+    text(wrappedText[i], width / 2, yOffset + i * lineHeight);
+  }
+  //text(tooltip, width / 2, 100);
   pop();
 }
 
@@ -331,6 +340,65 @@ function getClosestHotspot(x, y) {
   }
   
   return [closestHotspot, closestDist];
+}
+
+
+// Function to wrap text based on maxWidth
+function wrapText(txt, maxWidth) {
+  let words = txt.split(" ");
+  let lines = [];
+  let currentLine = "";
+
+  for (let word of words) {
+    let testLine = currentLine + (currentLine.length > 0 ? " " : "") + word;
+    if (textWidth(testLine) < maxWidth) {
+      currentLine = testLine;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  if (currentLine.length > 0) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+}
+
+
+// Function to wrap CJK text properly
+function wrapCJKText(txt, maxWidth) {
+  let lines = [];
+  let currentLine = "";
+  let currentWidth = 0;
+
+  for (let i = 0; i < txt.length; i++) {
+    let char = txt[i];
+    let charWidth = textWidth(char);
+
+    // Handle English words properly
+    if (char === " " && currentWidth > 0) {
+      lines.push(currentLine);
+      currentLine = "";
+      currentWidth = 0;
+      continue;
+    }
+
+    if (currentWidth + charWidth > maxWidth) {
+      lines.push(currentLine);
+      currentLine = char;
+      currentWidth = charWidth;
+    } else {
+      currentLine += char;
+      currentWidth += charWidth;
+    }
+  }
+
+  if (currentLine.length > 0) {
+    lines.push(currentLine);
+  }
+
+  return lines;
 }
 
 
