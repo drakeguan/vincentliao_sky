@@ -266,7 +266,14 @@ function mousePressed() {
   let closestHotspot = closestData[0];
 
   if (closestHotspot == null) {
-    nextOne();
+    if (mouseX > windowWidth / 2) {
+      // Clicked on the right side of the screen.
+      nextOne();
+    }
+    else {
+      // Clicked on the left side of the screen.
+      prevOne();
+    }
   }
 }
 
