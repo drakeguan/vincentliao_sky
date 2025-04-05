@@ -12,6 +12,8 @@ Demo 請見 [GitHub Page](https://drakeguan.github.io/vincentliao_sky/)。
 
 ## 如何參與？
 
+![](demo01.jpg)
+
 - 準備一張照片，建議在 960x960 的大小之內 (沒有任何原因)。
 - 準備一段文字，建議比一則 tweet 還短 (如果你不曉得什麼是 tweet，那就是文字少於 140 個字，甚至少於 100 個字更好的意思)。
 - Folk 這個 repo。
