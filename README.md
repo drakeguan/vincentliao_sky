@@ -26,3 +26,4 @@ Demo 請見 [GitHub Page](https://drakeguan.github.io/vincentliao_sky/)。
 - Animation of hotspots transformation between photos;
 - Less voronoi-blurry fallout;
 - Other visual effects to play for;
+- Auto-wrapping for long message in, at least, CJK (Chinese, Japanese, and Korean) and English;
